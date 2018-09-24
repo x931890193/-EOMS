@@ -8,6 +8,7 @@ logs/*.log
 # C extensions
 *.so
 *.txt
+pro++/eoms/logs/*.log
 
 # Distribution / packaging
 .Python
