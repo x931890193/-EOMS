@@ -1,0 +1,552 @@
+{% extends "base.html" %}
+    {% block title %}仪表盘{% endblock %}
+{% block nav %}
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+        	<nav>
+        		<ul class="nav">
+                                <li><a href="{% url 'index' %}" class="active"><i class="lnr lnr-home"></i> <span>仪表盘</span></a></li>
+                                <li><a href="{% url 'servicelist' %}" class=""><i class="lnr lnr-code"></i> <span>服务列表</span></a></li>
+        			<li>
+        				<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cog"></i> <span>功能</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+        				<div id="subPages" class="collapse ">
+        					<ul class="nav">
+        						<li><a href="eth/" class="">网卡设置</a></li>
+        						<li><a href="{% url 'sysecurity' %}" class="">安全中心</a></li>
+                                                        <li><a href="#" class="">服务安装</a></li>
+        					</ul>
+        				</div>
+        			</li>
+
+        			<li>
+        				<a href="#clientPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop-phone"></i> <span>客户端管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+        				<div id="clientPages" class="collapse ">
+        					<ul class="nav">
+                                                        <li><a href="{% url 'upclient' %}" class="">安装包上传</a></li>
+                                                        <li><a href="{% url 'upclient' %}" class="">升级包上传</a></li>
+        					</ul>
+        				</div>
+        			</li>
+        		</ul>
+        	</nav>
+        </div>
+   </div>
+   <!-- END LEFT SIDEBAR -->
+{% endblock %}
+
+{% block content %}
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+                                        <div class="row">
+                                                <div class="col-md-3">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+                                                                <div class="panel-heading">
+                                                                        <h3 class="panel-title">OS-INFO</h3>
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                        <div id="osinfo" class="ct-chart"></div>
+                                                                        <ul class="list-unstyled list-justify">
+                                                                                <li>User:<span>{{ user }}</span></li>
+                                                                                <li>OS:<span>{{ OS }}</span></li>
+                                                                                <li>CPUs:<span>{{ CPUs }}</span></li>
+                                                                                <li>Memory:<span>{{ Memory }}</span></li>
+                                                                                <li>Swap_Memory:<span>{{ Swap_Memory }}</span></li>
+                                                                                <li>Disk_/:<span>{{ Disk_Root }}</span></li>
+                                                                                <li>Disk_/data:<span>{{ Disk_Data }}</span></li>
+                                                                        </ul>
+                                                                </div>
+                                                        </div>
+                                                        <!-- END MULTI CHARTS -->
+                                                </div>
+                                                <div class="col-md-3">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+                                                                <div class="panel-heading">
+                                                                        <h3 class="panel-title">CPU Load</h3>
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                        <div id="cpusinfo" class="ct-chart"></div>
+                                                                        <ul class="list-unstyled list-justify">
+                                                                                <li>UPtime:<span>{{ Uptime }}</span></li>
+                                                                                <li>SSH:<span>{{ SSH }}</span></li>
+                                                                                <li>Login:<span>{{ Login }}</span></li>
+                                                                                <li>Porcess:<span>{{ Process }}</span></li>
+                                                                                <li>Connection:<span>{{ Connection}}</span></li>
+                                                                        </ul>
+                                                                </div>
+                                                        </div>
+                                                        <!-- END MULTI CHARTS -->
+                                                </div>
+							                    <div class="col-md-3">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+                                                                <div class="panel-heading">
+                                                                        <h3 class="panel-title">磁盘(/)</h3>
+                                                                </div>
+
+                                                                <div class="panel-body">
+                                                                        <div id="system-load" class="easy-pie-chart" data-percent="70">
+                                                                                <span class="percent">70</span>
+                                                                        </div>
+									<ul class="list-unstyled list-justify">
+                                                                                <li>Used_G:<span>{{ Disk_Root_u }}</span></li>
+                                                                                <li>Free_G:<span>{{ Disk_Root_f }}</span></li>
+									</ul>
+                                                                </div>
+
+                                                        </div>
+                                                        <!-- END MULTI CHARTS -->
+                                                </div>
+                                                <div class="col-md-3">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+                                                                <div class="panel-heading">
+                                                                        <h3 class="panel-title">磁盘(/data)</h3>
+                                                                </div>
+
+                                                                <div class="panel-body">
+                                                                        <div id="system-load1" class="easy-pie-chart" data-percent="70">
+                                                                                <span class="percent">70</span>
+                                                                        </div>
+									<ul class="list-unstyled list-justify">
+                                                                                <li>Used_G:<span>{{ Disk_Data_u }}</span></li>
+                                                                                <li>Free_G:<span>{{ Disk_Data_f }}</span></li>
+									</ul>
+                                                                </div>
+
+                                                        </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                                <div class="col-md-6">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+                                                                <div class="panel-heading">
+                                                                        <h3 class="panel-title">CPU</h3>
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                        <div id="cpu-trends-chart" class="ct-chart"></div>
+                                                                        <ul class="list-unstyled list-space-around">
+                                                                                <li>CPU_Max:<span>{{ cpu.max }}%</span></li>
+                                                                                <li>CPU_Min:<span>{{ cpu.min }}%</span></li>
+                                                                        </ul>
+                                                                </div>
+                                                        </div>
+                                                        <!-- END MULTI CHARTS -->
+                                                </div>
+                                                <div class="col-md-6">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+                                                                <div class="panel-heading">
+                                                                        <h3 class="panel-title">内存</h3>
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                        <div id="memory-trends-chart" class="ct-chart"></div>
+                                                                        <ul class="list-unstyled list-space-around">
+                                                                                <li>Mem_Max:<span>{{ mem.memory_max }}%</span></li>
+                                                                                <li>Swap_Max:<span>{{ mem.swap_max }}%</span></li>
+                                                                                <li>Mem_Min:<span>{{ mem.memory_min }}%</span></li>
+                                                                                <li>Swap_Min:<span>{{ mem.swap_min }}%</span></li>
+                                                                        </ul>
+                                                                </div>
+                                                        </div>
+                                                        <!-- END MULTI CHARTS -->
+                                                </div>
+                                        </div>
+
+
+					                    <div class="row">
+                                                <div class="col-md-6">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+								<div class="panel-heading">
+                                                                        <h3 class="panel-title">CPU Load</h3>
+                                                                </div>
+
+                                                                <div class="panel-body">
+							        <div id="cpu-load-chart" class="ct-chart"></div>
+                                                                        <ul class="list-unstyled list-space-around">
+                                                                                <li>CPU1_Max:<span>{{ cpuload.cpu1_max }}%</span></li>
+                                                                                <li>CPU1_Min:<span>{{ cpuload.cpu1_min }}%</span></li>
+                                                                                <li>CPU5_Max:<span>{{ cpuload.cpu5_max }}%</span></li>
+                                                                                <li>CPU5_Min:<span>{{ cpuload.cpu5_min }}%</span></li>
+                                                                                <li>CPU15_Max:<span>{{ cpuload.cpu15_max }}%</span></li>
+                                                                                <li>CPU15_Min:<span>{{ cpuload.cpu15_min }}%</span></li>
+                                                                        </ul>
+                                                                </div>
+
+                                                        </div>
+                                                        <!-- END MULTI CHARTS -->
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+								<div class="panel-heading">
+                                                                       <h3 class="panel-title">流量</h3>
+                                                                </div>
+							        <div id="headline-chart" class="ct-chart"></div>
+                                                                        <ul class="list-unstyled list-space-around">
+                                                                                <li>NetIn_Max:<span>{{ net.netin_max }}/s</span></li>
+                                                                                <li>NetIN_Min:<span>{{ net.netin_min }}/s</span></li>
+                                                                                <li>NetOut_Max:<span>{{ net.netout_max }}/s</span></li>
+                                                                                <li>NetOut_Min:<span>{{ net.netout_min }}/s</span></li>
+									</ul>
+                                                        </div>
+                                                        <!-- END MULTI CHARTS -->
+                                                </div>
+                                        </div>
+
+					<!-- OVERVIEW -->
+					<!-- END OVERVIEW -->
+				</div>
+
+{% if is_ok %}
+
+                    <div class="col-md-3" style="width: 100%; float: right">
+                                                        <!-- MULTI CHARTS -->
+                                                        <div class="panel">
+                                                                <div class="panel-heading">
+                                                                        <h3 class="panel-title" style="text-align:center; font-size: 18px">Process-Info</h3>
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                        <div id="osinfo" class="ct-chart"></div>
+                                                                        <ul class="list-unstyled list-justify">
+                                                                                <li><div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">USER</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">PID</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">VIRT</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">RES</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">SHR</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">S</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">%CPU</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">%MEM</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">TIME+</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 35px;font-size: 18px; float: left">COMMAND</div>
+                                                                                </li>
+
+                                                                            {% for foo in process_data %}
+                                                                                   <li>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.USER }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.PID }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.VIRT }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.RES }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.SHR }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.S }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.CPU }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.MEM }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.TIME }}</div>
+                                                                                    <div style="display: inline-block; width: 10%; height: 30px;font-size: 16px; float: left">{{ foo.COMMAND }}</div>
+                                                                                   </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                </div>
+                                                        </div>
+                                                        <!-- END MULTI CHARTS -->
+                                                </div>
+
+{% endif %}
+
+			</div>
+			<!-- END MAIN CONTENT -->
+	</div>
+
+		<!-- END MAIN -->
+
+{% endblock %}
+
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+
+			</div>
+		</footer>
+	</div>
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="assets/vendor/jquery/jquery.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script src="assets/vendor/chartist/js/chartist.min.js"></script>
+	<script src="assets/scripts/klorofil-common.js"></script>
+
+
+{% block js %}
+	<script>
+	$(function() {
+		var data, options;
+
+		// headline charts
+		/*
+		data = {
+			labels: ['16:00', '16:05', '16:10', '16:15', '16:20', '16:25', '16:30'],
+			series: [
+				[23, 29, 24, 40, 25, 24, 35],
+				[14, 25, 18, 34, 29, 38, 44],
+			]
+		};
+		*/
+		data = {
+                        labels: {{ net.labels |safe }},
+                        series: {{ net.data }}
+                };
+
+		options = {
+			height: 300,
+			showArea: true,
+			showLine: false,
+			showPoint: false,
+			fullWidth: true,
+			axisX: {
+				showGrid: false,
+			},
+			lineSmooth: false,
+		};
+
+		new Chartist.Line('#headline-chart', data, options);
+
+		// cpu trend charts
+		 data = {
+                        labels: {{ cpu.labels|safe }},
+                        series: [{
+                                name: 'series-real',
+                                data: {{ cpu.data }},
+                        },
+                        ]
+                };
+
+	//	data = {
+	//			 labels: {{ cpu.labels |safe }},
+	//		 series: {{ cpu.data }},
+	//	};
+
+		options = {
+			fullWidth: true,
+			lineSmooth: true,
+			height: "270px",
+			low: 0,
+			high: 'auto',
+			series: {
+				'series-real': {
+					showArea: false,
+					showPoint: false,
+					showLine: true
+				},
+			},
+			axisX: {
+				showGrid: true,
+			},
+			axisY: {
+				showGrid: false,
+				onlyInteger: false,
+				offset: 0,
+			},
+			chartPadding: {
+				left: 20,
+				right: 20
+			}
+		};
+
+		new Chartist.Line('#cpu-trends-chart', data, options);
+
+                // memory trend charts
+		/*
+                data = {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        series: [{
+                                name: 'series-real',
+                                data: [800, 1380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
+                        }, 
+                        ]
+                };
+		*/
+		data = {
+                        labels: {{ mem.labels |safe }},
+                        series:
+                                {{ mem.data }},
+
+
+                };
+
+                options = {
+                        fullWidth: true,
+                        lineSmooth: false,
+                        height: "270px",
+                        low: 0,
+                        high: 'auto',
+                        series: {
+                                'series-real': {
+                                        showArea: true,
+                                        showPoint: false,
+                                        showLine: false
+                                },
+                        },
+                        axisX: {
+                                showGrid: true,
+                        },
+                        axisY: {
+                                showGrid: false,
+                                onlyInteger: true,
+                                offset: 0,
+                        },
+                        chartPadding: {
+                                left: 20,
+                                right: 20
+                        }
+                };
+
+                new Chartist.Line('#memory-trends-chart', data, options);
+
+
+                // cpu-load charts
+                data = {
+                         labels: {{ cpuload.labels |safe }},
+                         series: {{ cpuload.data }},
+                };
+
+                options = {
+                        fullWidth: true,
+                        lineSmooth: true,
+                        height: "270px",
+                        low: 0,
+                        high: 'auto',
+                        series: {
+                                'series-real': {
+                                        showArea: false,
+                                        showPoint: false,
+                                        showLine: true
+                                },
+                        },
+                        axisX: {
+                                showGrid: true,
+                        },
+                        axisY: {
+                                showGrid: false,
+                                onlyInteger: false,
+                                offset: 0,
+                        },
+                        chartPadding: {
+                                left: 20,
+                                right: 20
+                        }
+                };
+
+                new Chartist.Line('#cpu-load-chart', data, options);
+
+
+		// visits chart
+		data = {
+			labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+			series: [
+				[6384, 6342, 5437, 2764, 3958, 5068, 7654]
+			]
+		};
+
+		options = {
+			height: 300,
+			axisX: {
+				showGrid: false
+			},
+		};
+
+//		new Chartist.Bar('#visits-chart', data, options);
+
+
+		// real-time pie chart
+/*
+		var sysLoad = $('#system-load').easyPieChart({
+			size: 130,
+			barColor: function(percent) {
+				return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
+			},
+			trackColor: 'rgba(245, 245, 245, 0.8)',
+			scaleColor: false,
+			lineWidth: 5,
+			lineCap: "square",
+			animate: 800
+		});
+
+		var updateInterval = 3000; // in milliseconds
+
+		setInterval(function() {
+			var randomVal;
+			//randomVal = getRandomInt(0, 1000);
+                        randomVal = {{ disk_root }};
+			//randomVal = 99;
+
+			sysLoad.data('easyPieChart').update(randomVal);
+			sysLoad.find('.percent').text(randomVal);
+		}, updateInterval);
+
+		function getRandomInt(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+*/
+                // real-time pie chart
+                var sysLoad1 = $('#system-load1').easyPieChart({
+                        size: 130,
+                        barColor: function(percent) {
+                                return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
+                        },
+                        trackColor: 'rgba(245, 245, 245, 0.8)',
+                        scaleColor: false,
+                        lineWidth: 5,
+                        lineCap: "square",
+                        animate: 800
+                });
+
+                var updateInterval = 1000; // in milliseconds
+
+                setInterval(function() {
+                        var randomVal;
+                        //randomVal = 17;
+                        randomVal = {{ Disk_Data_p }};
+
+                        sysLoad1.data('easyPieChart').update(randomVal);
+                        sysLoad1.find('.percent').text(randomVal);
+                }, updateInterval);
+
+                function getRandomInt(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+
+                var sysLoad = $('#system-load').easyPieChart({
+                        size: 130,
+                        barColor: function(percent) {
+                                return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
+                        },
+                        trackColor: 'rgba(245, 245, 245, 0.8)',
+                        scaleColor: false,
+                        lineWidth: 5,
+                        lineCap: "square",
+                        animate: 800
+                });
+
+                var updateInterval = 1000; // in milliseconds
+
+                setInterval(function() {
+                        var randomVal;
+                        //randomVal = getRandomInt(0, 1000);
+                        //randomVal = 17;
+                        randomVal = {{Disk_Root_p}};
+
+                        sysLoad.data('easyPieChart').update(randomVal);
+                        sysLoad.find('.percent').text(randomVal);
+                }, updateInterval);
+
+                function getRandomInt(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+
+	});
+	</script>
+
+{% endblock %}

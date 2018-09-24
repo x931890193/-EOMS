@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}客户端管理{% endblock %}
+
+{% block nav %}
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="{% url 'index' %}" class=""><i class="lnr lnr-home"></i> <span>仪表盘</span></a></li>
+                    <li><a href="{% url 'servicelist' %}" class=""><i class="lnr lnr-code"></i> <span>服务列表</span></a>
+                    </li>
+                    <li>
+                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cog"></i>
+                            <span>功能</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="{% url 'eth' %}" class="">网卡配置</a></li>
+                                <li><a href="{% url 'sysecurity' %}" class="">系统安全</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                            <a href="#clientPages" data-toggle="collapse" class="active"><i class="lnr lnr-laptop-phone"></i> <span>客户端管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="clientPages" class="collapse in">
+                                    <ul class="nav">
+                                            <li><a href="{% url 'upclient' %}" class="active">安装包上传</a></li>
+                                            <li><a href="#" class="">升级包上传</a></li>
+                                    </ul>
+                            </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+{% endblock %}
+
+
+{% block content %}
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">客户端管理</h3>
+                            </div>
+                            <div class="panel-body">
+
+                                <form action="{% url 'upclient' %}" class="form form-horizontal" role="form" method="post" enctype="multipart/form-data"  >
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                        {{ field.label_tag }} <span style="color:red" >{{ field.errors }}</span> {{ field }}
+                                    {% endfor %}    
+                                <input type="submit" class="btn btn-primary"  value="提交" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+{% endblock %}
+
+{% block js %}
+    <!-- page js -->
+{% endblock %}
