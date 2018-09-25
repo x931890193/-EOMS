@@ -1,0 +1,431 @@
+
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}服务列表{% endblock %}
+
+{% block nav %}
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="{% url 'index' %}" class=""><i class="lnr lnr-home"></i> <span>仪表盘</span></a></li>
+                    <li><a href="{% url 'servicelist' %}" class="active"><i class="lnr lnr-code"></i> <span>服务列表</span></a>
+                    </li>
+                    <li>
+                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cog"></i> <span>功能</span>
+                            <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="{% url 'eth' %}" class="">网卡配置</a></li>
+                                <li><a href="{% url 'sysecurity' %}" class="">系统安全</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                            <a href="#clientPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop-phone"></i> <span>客户端管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="clientPages" class="collapse ">
+                                    <ul class="nav">
+                                            <li><a href="{% url 'upclient' %}" class="">安装包上传</a></li>
+                                            <li><a href="#" class="">升级包上传</a></li>
+                                    </ul>
+                            </div>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+{% endblock %}
+
+
+{% block content %}
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+
+            <!-- 服务监控列表 start -->
+            <div class="log-list">
+
+
+                <!-- 基础服务 start-->
+                <div class="panel panel-headline panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">服务列表</h3>
+
+                        <div class="right">
+                            <div class="nav navbar-nav navbar-right">
+                                <button type="button" class="dropdown dropdown-toggle" data-toggle="dropdown">
+                                    <i class="lnr lnr-magic-wand"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">1分钟</a></li>
+                                    <li><a href="#">2分钟</a></li>
+                                    <li><a href="#">5分钟</a></li>
+                                    <li><a href="#">10分钟<i class="lnr lnr-pointer-left"></i></a></li>
+                                    <li><a href="#">15分钟</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <!-- TABBED CONTENT -->
+                        <div class="custom-tabs-line tabs-line-bottom left-aligned">
+                            <ul class="nav" role="tablist">
+                                <li class="active">
+                                    <a href="#tab-base-server" role="tab" data-toggle="tab">
+                                        基础服务
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#tab-cpp-server" role="tab" data-toggle="tab">
+                                        C++服务
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab-java-server" role="tab" data-toggle="tab">
+                                        java服务
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab-merge-server" role="tab" data-toggle="tab">
+                                        集中服务
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab-base-server">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+
+                                        <thead>
+                                        <tr>
+                                            <th>服务名称</th>
+                                            <th>服务信息</th>
+                                            <th>服务状态</th>
+                                            <th>控制器</th>
+                                            <th>日志下载</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                        {% for server  in vrvserver.base %}
+                                                <tr>
+
+                                                    <td>{{ server.name }}</td>
+                                                    <td>{{ server.comment }}</td>
+
+                                                    {% if server.status == "SUCCESS" %}
+                                                        <td><span class="label label-success">正常</span></td>
+                                                    {% else %}
+                                                        <td><span class="label label-danger">停止</span></td>
+                                                    {% endif %}
+
+                                                    {% if server.status == "SUCCESS" %}
+                                                        <td><a data-action="stop" name="{{ server.name }}"
+                                                               class="btn btn-primary btn-xs action-btn" server_port="{{ server.port }}"><i
+                                                                class="fa fa-refresh"></i>停止</a></td>
+
+                                                    {% else %}
+                                                        <td><a data-action="start" name="{{ server.name }}"
+                                                               class="btn btn-primary btn-xs action-btn" server_port="{{ server.port }}"><i
+                                                                class="fa fa-refresh"></i>启动</a>
+                                                        </td>
+
+                                                    {% endif %}
+
+                                                    <td>
+                                                        <a type="button" class="btn btn-primary btn-xs download-btn" data-serverName="{{ server.name }}">
+                                                            <i class="lnr lnr-download"></i>选择日志
+                                                        </a>
+                                                        <form class="log-form"
+                                                              action="{% url 'servicelist' %}"
+                                                              data-logdir="{{ server.logdir }}"
+                                                              method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="panel-body">
+                                                                <table class="table table-striped">
+
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <label class="fancy-checkbox">
+                                                                                <input type="checkbox" id="items"/>
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </th>
+                                                                        <th>日志名称</th>
+                                                                        <th>日志大小</th>
+                                                                    </tr>
+                                                                    </thead>
+
+                                                                    <tbody>
+                                                                    {% for log in server.logs %}
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label class="fancy-checkbox">
+                                                                                    <input type="checkbox" class="log-item" name="log" value="{{ log.1 }}"/>
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>{{ log.1 }}</td>
+                                                                            <td>{{ log.0 }}</td>
+                                                                        </tr>
+                                                                    {% empty %}
+                                                                        <tr>
+                                                                            <td colspan="3">暂无日志</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab-java-server">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+
+                                        <thead>
+                                        <tr>
+                                            <th>服务名称</th>
+                                            <th>服务信息</th>
+                                            <th>服务状态</th>
+                                            <th>控制器</th>
+                                            <th>日志下载</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for server  in vrvserver.java %}
+                                                <tr>
+                                                    <td>{{ server.name }}</td>
+                                                    <td>{{ server.comment }}</td>
+                                                    {% if server.status == "SUCCESS" %}
+                                                        <td><span class="label label-success">正常</span></td>
+                                                    {% else %}
+                                                        <td><span class="label label-danger">停止</span></td>
+                                                    {% endif %}
+                                                    {% if server.status == "SUCCESS" %}
+                                                        <td><a data-action="stop" name="{{ server.name }}"
+                                                               class="btn btn-primary btn-xs action-btn"><i
+                                                                class="fa fa-refresh"></i>停止</a></td>
+                                                    {% else %}
+                                                        <td><a data-action="start" name="{{ server.name }}"
+                                                               class="btn btn-primary btn-xs action-btn"><i
+                                                                class="fa fa-refresh"></i>启动</a>
+                                                        </td>
+                                                    {% endif %}
+                                                    <td>
+                                                        <a type="button" class="btn btn-primary btn-xs download-btn" data-serverName="{{ server.name }}">
+                                                            <i class="lnr lnr-download"></i>选择日志
+                                                        </a>
+                                                        <form class="log-form"
+                                                              action="{% url 'servicelist' %}"
+                                                              data-logdir="{{ server.logdir }}"
+                                                              method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="panel-body">
+
+                                                                <table class="table table-striped">
+
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <label class="fancy-checkbox">
+                                                                                <input type="checkbox" id="items"/>
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </th>
+                                                                        <th>日志名称</th>
+                                                                        <th>日志大小</th>
+                                                                    </tr>
+                                                                    </thead>
+
+                                                                    <tbody>
+                                                                    {% for log in server.logs %}
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label class="fancy-checkbox">
+                                                                                    <input type="checkbox"
+                                                                                           class="log-item" name="log"
+                                                                                           value="{{ log.1 }}"/>
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>{{ log.1 }}</td>
+                                                                            <td>{{ log.0 }}</td>
+                                                                        </tr>
+                                                                    {% empty %}
+                                                                        <tr>
+                                                                            <td colspan="3">暂无日志</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- c++ start -->
+                            <div class="tab-pane fade" id="tab-cpp-server">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+
+                                        <thead>
+                                        <tr>
+                                            <th>服务名称</th>
+                                            <th>服务信息</th>
+                                            <th>服务状态</th>
+                                            <th>控制器</th>
+                                            <th>日志下载</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for server  in vrvserver.cpp %}
+                                                <tr>
+                                                    <td>{{ server.name }}</td>
+                                                    <td>{{ server.comment }}</td>
+                                                    {% if server.status == "SUCCESS" %}
+                                                        <td><span class="label label-success">正常</span></td>
+                                                    {% else %}
+                                                        <td><span class="label label-danger">停止</span></td>
+                                                    {% endif %}
+                                                    {% if server.status == "SUCCESS" %}
+                                                        <td><a data-action="stop" name="{{ server.name }}"
+                                                               class="btn btn-primary btn-xs action-btn"><i
+                                                                class="fa fa-refresh"></i>停止</a></td>
+                                                    {% else %}
+                                                        <td><a data-action="start" name="{{ server.name }}"
+                                                               class="btn btn-primary btn-xs action-btn"><i
+                                                                class="fa fa-refresh"></i>启动</a>
+                                                        </td>
+                                                    {% endif %}
+                                                    <td>
+                                                        <a type="button" class="btn btn-primary btn-xs download-btn" data-serverName="{{ server.name }}">
+                                                            <i class="lnr lnr-download"></i>选择日志
+                                                        </a>
+                                                        <form class="log-form"
+                                                              action="{% url 'servicelist' %}"
+                                                              data-logdir="{{ server.logdir }}"
+                                                              method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="panel-body">
+
+                                                                <table class="table table-striped">
+
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <label class="fancy-checkbox">
+                                                                                <input type="checkbox" id="items"/>
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </th>
+                                                                        <th>日志名称</th>
+                                                                        <th>日志大小</th>
+                                                                    </tr>
+                                                                    </thead>
+
+                                                                    <tbody>
+                                                                    {% for log in server.logs %}
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label class="fancy-checkbox">
+                                                                                    <input type="checkbox"
+                                                                                           class="log-item" name="log"
+                                                                                           value="{{ log.1 }}"/>
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>{{ log.1 }}</td>
+                                                                            <td>{{ log.0 }}</td>
+                                                                        </tr>
+                                                                    {% empty %}
+                                                                        <tr>
+                                                                            <td colspan="3">暂无日志</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- c++ end -->
+
+                            <!-- 集中 start -->
+                            <div class="tab-pane fade" id="tab-merge-server">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+
+                                        <thead>
+                                        <tr>
+                                            <th>服务名称</th>
+                                            <th>服务信息</th>
+                                            <th>控制器</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for server  in vrvserver.merge %}
+                                                <tr>
+                                                    <td>{{ server.name }}</td>
+                                                    <td>{{ server.comment }}</td>
+                                                    <td>
+                                                    <a data-action="start" name="{{ server.name }}"class="btn btn-primary btn-xs action-btn"><i class="fa fa-refresh"></i>启动</a>
+                                                    <a data-action="stop" name="{{ server.name }}"class="btn btn-primary btn-xs action-btn"><i class="fa fa-refresh"></i>停止</a>
+                                                    </td>
+                                                </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- 集中 end -->
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- END 基础服务 -->
+
+            </div>
+            <!-- 服务监控列表 end -->
+
+
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+
+
+{% endblock %}
+
+
+{% block js %}
+    <script src={% static "scripts/pages/service.js" %}></script>
+{% endblock %}

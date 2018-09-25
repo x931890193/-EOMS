@@ -1,0 +1,163 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="_csrf" content="{{ csrf_token }}">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href={% static "vendor/bootstrap/css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href={% static "vendor/layer/skin/layer.css" %}>
+    <link rel="stylesheet" href={% static "vendor/font-awesome/css/font-awesome.min.css" %}>
+    <link rel="stylesheet" href={% static "vendor/linearicons/style.css" %}>
+    <link rel="stylesheet" href={% static "vendor/chartist/css/chartist-custom.css" %}>
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href={% static 'css/main.css' %}>
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href={% static "css/demo.css" %}>
+    <link rel="stylesheet" href={% static "css/app.css" %}>
+
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href={% static "img/apple-icon.png" %}>
+    <link rel="icon" type="image/png" sizes="96x96" href={% static "img/favicon.png" %}>
+    <!-- user_count -->
+{#    <link rel="stylesheet" type="text/css" href={% static "css/chart/reset.css" %}>#}
+	<link rel="stylesheet" type="text/css" href={% static "css/chart/main.css" %}>
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+
+            <!--logo图片 a href="index.html"><img src={% static "img/logo-dark.png" %} alt="Klorofil Logo" class="img-responsive logo"></a -->
+            <a href="{% url 'index' %}" >VRV</a>
+
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+            </div>
+            <form class="navbar-form navbar-left" action="/" method="post">
+                <div class="input-group">
+                     {% csrf_token %}
+                    <input type="text" value="" class="form-control" placeholder="搜索..." name="kw">
+                    <span class="input-group-btn"><button type="submit" class="btn btn-primary">搜一下</button></span>
+                </div>
+            </form>
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                class="lnr lnr-question-circle"></i> <span>帮助</span> <i
+                                class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">基本使用</a></li>
+                            <li><a href="#">安全</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
+                                src={% static "img/user3.png" %} class="img-circle" alt="Avatar">
+                            <span>{{ request.user }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'profile' %}"><i class="lnr lnr-user"></i> <span>我的信息</span></a></li>
+                            <li><a href="{% url 'change_password' %}"><i class="lnr lnr-user"></i> <span>修改密码</span></a></li>
+                            <li><a href="{% url 'logout' %}"><i class="lnr lnr-exit"></i> <span>登出</span></a></li>
+                        </ul>
+                    </li>
+{#                     <li>#}
+{#                        <a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>#}
+{#                    </li>#}
+
+
+
+
+<li>            <div class="time-title pull-right">
+                      <div class="year-month pull-left">
+                        <p>{{ time.A }}</p>
+                        <p><span style="font-size:20px">{{ time.Y }}</span>年{{ time.m }}月{{ time.d }}日</p>
+                      </div>
+                      <div class="hour-minute pull-right">
+                         <strong style="font-size: 35px;">{{ time.H_M }}</strong>
+                      </div>
+                  </div></li>
+
+
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+
+
+    <!-- LEFT SIDEBAR -->
+    {% block nav %} {% endblock %}
+    <!-- END LEFT SIDEBAR -->
+
+
+    <!-- MAIN -->
+    {% block content %} {% endblock %}
+    <!-- END MAIN -->
+
+
+    <div class="clearfix"></div>
+    <footer>
+        <div class="container-fluid">
+            <!-- 底部保留 -->
+        </div>
+    </footer>
+
+
+</div>
+<!-- END WRAPPER -->
+<!-- Javascript -->
+<script src={% static "vendor/jquery/jquery.min.js" %}></script>
+<script src={% static "vendor/vue.min.js" %}></script>
+<script src={% static "vendor/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "vendor/layer/layer.js" %}></script>
+<script src={% static "vendor/jquery-slimscroll/jquery.slimscroll.min.js" %}></script>
+{#<script src={% static "jquery-1.12.4.min.js" %}></script>#}
+<script src={% static "js/jquery.base64.js" %} ></script>
+<script src="{% static "js/main.js" %}"></script>
+
+<script src={% static "vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js" %}></script>
+<script src={% static "vendor/chartist/js/chartist.min.js" %}></script>
+<script src={% static "scripts/klorofil-common.js" %}></script>
+
+<script src={% static "css/chart/echarts.min.js" %}></script>
+
+
+<script>$(function () {
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+});
+    function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+
+    if(arr=document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}
+
+
+</script>
+
+{% block js %}
+{% endblock %}
+
+</body>
+
+</html>
