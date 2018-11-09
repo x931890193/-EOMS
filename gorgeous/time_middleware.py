@@ -15,7 +15,5 @@ def my_middelwares(get_response):
 		response = get_response(request)
 		# print(response)
 		response.set_cookie("whoisyourdaddy", "hello world", max_age=3600)
-
-		# response.set_cookie('itcast2', 'python2', max_age=3600)  # 有效期一小时
 		return response
 	return time_middlewares
