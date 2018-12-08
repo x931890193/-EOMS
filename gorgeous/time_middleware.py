@@ -9,7 +9,6 @@ import os
 
 
 def my_middelwares(get_response):
-	"""for test """
 	def time_middlewares(request):
 		request.session["python"] = os.name
 		response = get_response(request)
@@ -17,3 +16,4 @@ def my_middelwares(get_response):
 		response.set_cookie("whoisyourdaddy", "hello world", max_age=3600)
 		return response
 	return time_middlewares
+
