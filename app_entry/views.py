@@ -80,7 +80,8 @@ class EthView(View):
 
 
 class LogInfo(View):
-    pass
+    def get(self, request):
+        return JsonResponse({'msg':'this is log'})
 
 
 def ethinfo(request, mode):
@@ -99,9 +100,3 @@ class Terminal(View):
         else:
             subprocess.getstatusoutput("python ./webssh/main.py")
         return render(request, "terminal.html", data)
-
-
-# "INSERT INTO aio_sigma_sms('task_id','phone_number','time','SMS_provider','status','comment') VALUES(\'{}\'{}\'{}\'{}\'{}\'{}\'');".format(task_id, phone_numbers, str(datetime.datetime.now()), sms_provider, status, task_result)
-
-
-# INSERT INTO aio_sigma_sms('task_id','phone_number','time','SMS_provider','status','comment')VALUES('ff-bc97-541c5df69d8e','18811055691','2018-10-21 21:03:41.491368','ali','1','{"status": "SUCCESS", "result": "HTTP Status: 302 Error:SDK.UnknownServerError Can not parse error message from server response. RequestID: None", "traceback": null, "children": [], "task_id": "a6f150f5-98bf-44ff-bc97-541c5df69d8e"}');

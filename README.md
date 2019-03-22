@@ -27,3 +27,10 @@
   
   
   [3]: https://raw.githubusercontent.com/x931890193/-EOMS/master/%E5%B1%95%E7%A4%BA3.png
+  
+  
+  
+  执行 sudo 命令
+echo "password" | sudo -S COMMAD
+
+top -n 1 -b  > ./tmp.txt
