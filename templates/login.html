@@ -18,6 +18,7 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href={% static "img/apple-icon.png" %}>
 	<link rel="icon" type="image/png" sizes="96x96" href={% static "img/favicon.png" %}>
+
 </head>
 
 <body>
@@ -26,7 +27,7 @@
 		<div class="vertical-align-wrap">
 			<div class="vertical-align-middle">
 				<div class="auth-box ">
-					<div class="left">
+					<div class="left" style="display: block;" id="login">
 						<div class="content">
 							<div class="header">
 								<!--div class="logo text-center"><img src={% static "img/logo-dark.png" %} alt="Klorofil Logo"></div-->
@@ -34,15 +35,18 @@
 								<p class="lead">账号登录</p>
 							</div>
 
-							<form class="form-auth-small" action="{% url 'login' %}?next={{ next  }}" method="POST">
-                                                        {% csrf_token %}
+
+
+
+							<form class="form-auth-small"  method="POST" id="logo">
+                              {% csrf_token %}
 								<div class="form-group">
 									<label for="signin-text" class="control-label sr-only">User</label>
-									<input type="text" class="form-control" id="signin-text" name="username"  placeholder="User" autocomplete="off">
+									<input type="text" class="form-control" id="signin-text" name="username"  placeholder="请输入用户名" autocomplete="off">
 								</div>
 								<div class="form-group">
 									<label for="signin-password" class="control-label sr-only">Password</label>
-									<input type="password" class="form-control" id="signin-password" name="password"  placeholder="Password" autocomplete="off">
+									<input  style="color:#fff" type="password" class="form-control" id="signin-password" name="password"  placeholder="请输入密码" autocomplete="off">
 								</div>
 								<div class="form-group clearfix">
 									<label class="fancy-checkbox element-left">
@@ -53,13 +57,74 @@
 								<button type="submit" class="btn btn-primary btn-lg btn-block">登录</button>
 								<div class="bottom">
 									<span class="helper-text"><i class="fa fa-lock"></i> <a href="#">忘记密码</a></span>
+                                    <a href="#"  class="reg" onclick="showreg()" >去注册?</a></span>
 								</div>
                                                                 <input type="hidden" name="next" value="{{ next }}" />
-                                                                <h6 style="color:red"><b>{{ login_err }}</b></h6>
+                                                                <h6 style="color:red" id="logo_error"><b>{{ login_err }}</b></h6>
 							</form>
+
+
 
 						</div>
 					</div>
+                    <div class="left" style="display: none;" id="register">
+						<div class="content">
+							<div class="header">
+								<!--div class="logo text-center"><img src={% static "img/logo-dark.png" %} alt="Klorofil Logo"></div-->
+								<div class="logo text-center">VRV</div>
+								<p class="lead">账号注册</p>
+							</div>
+
+
+
+
+							<form class="form-auth-small"  method="POST" id="reg">
+                              {% csrf_token %}
+								<div class="form-group">
+									<label for="signin-text" class="control-label sr-only">User</label>
+									<input type="text" class="form-control" id="signin-text_reg" name="username"  placeholder="请输入用户名" autocomplete="off">
+								</div>
+								<div class="form-group">
+									<label for="signin-password" class="control-label sr-only">Password</label>
+									<input type="password" class="form-control" id="signin-password_reg" name="password"  placeholder="请输入密码" autocomplete="off">
+								</div>
+                                <div class="form-group">
+									<label for="signin-password" class="control-label sr-only">Password</label>
+									<input type="password" class="form-control" id="comfirm-password_reg" name="password_comfirm"  placeholder="确认密码" autocomplete="off">
+								</div>
+								<div class="form-group clearfix">
+{#									<label class="fancy-checkbox element-left">#}
+{#										<input type="checkbox">#}
+{#										<span>记住密码 </span>#}
+{#									</label>#}
+								</div>
+								<button type="submit" class="btn btn-primary btn-lg btn-block">立即注册</button>
+								<div class="bottom">
+{#									<span class="helper-text"><i class="fa fa-lock"></i> <a href="#">忘记密码</a></span>#}
+								<a href="#" class="logo" onclick="showlogo()">去登录?</a></span>
+                                </div>
+                                                                <input type="hidden" name="next" value="{{ next }}" />
+                                                                <h6 style="color:red" id="logo_error"><b>{{ login_err }}</b></h6>
+							</form>
+
+
+
+						</div>
+					</div>
+                    <script src={% static "/js/jquery-3.2.1.js" %}></script>
+                    <script type="text/javascript">
+
+                        var logo = document.getElementById("login");
+                        var reg = document.getElementById("register");
+                        function showlogo() {
+                            logo.style.display = "block";
+                            reg.style.display = "none";
+                        }
+                        function showreg() {
+                            reg.style.display = "block";
+                            logo.style.display = "none";
+                        }
+                    </script>
 					<div class="right">
 						<div class="overlay"></div>
 						<div class="content text">
@@ -74,5 +139,9 @@
 	</div>
 	<!-- END WRAPPER -->
 </body>
+
+<script src={% static "js/jquery-3.2.1.js" %}></script>
+<script src={% static "js/jquery.base64.js" %}></script>
+<script src="{% static "js/main.js" %}"></script>
 
 </html>

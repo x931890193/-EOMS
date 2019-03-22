@@ -16,8 +16,10 @@
                             <span>功能</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subPages" class="ollapse in">
                             <ul class="nav">
-                                <li><a href="{% url 'eth' %}" class="active">网卡配置</a></li>
-                                <li><a href="{% url 'sysecurity' %}" class="">系统安全</a></li>
+
+                                <li><a href="{% url 'eth' %}" class="">网卡设置</a></li>
+                                <li><a href="{% url 'sysecurity' %}" class="">安全中心</a></li>
+                                <li><a href="{% url 'terminal' %}" class="">服务安装</a></li>
                             </ul>
                         </div>
                     </li>
@@ -30,6 +32,7 @@
                                     </ul>
                             </div>
                     </li>
+                    <li><a href="{% url 'log' %}" class=""><i class="lnr lnr-hand"></i> <span>日志列表</span></a></li>
                 </ul>
             </nav>
         </div>

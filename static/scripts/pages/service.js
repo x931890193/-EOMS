@@ -1,6 +1,4 @@
-/**
- * Created by weijuer on 2017/8/15.
- */
+
 var Service = {
     init: function () {
         this.initToken();
@@ -23,27 +21,39 @@ var Service = {
             $this.find("i").addClass('fa-spin');
             var serverName = $this.attr('name');
             var serverMode = $this.attr('data-action');
-
-
+            var serverport = $this.attr('server_port');
             var url = '/servicelist/';
             var params = {
                 'servername': serverName,
-                'servermode': serverMode
+                'servermode': serverMode,
+                "serverport": serverport
             };
 
             // 提交
             $.post(url, params, function (res) {
 
-                var result = JSON.parse(res);
-
-                if (result.status === '1') {
-                    layer.alert('启停服务成功！', function () {
+                // var result = JSON.parse(res);
+                // alert(res.status);
+                if (res.status === 1) {
+                    layer.alert('启停服务成功！',
+                        function () {
                         // 刷新
                         location.reload();
+                            console.log(6666)
                     });
-                } else {
-                    layer.alert('启停服务失败！');
+                }  else if (res.status === 2){
+						alert(res.errmsg);
+						location.reload()
+						}
+					else {
+                    // alert(res);
+                    layer.alert('启停服务失败！', function (){
+                        location.reload()
+
+                    });
+                    // location.reload();
                 }
+				
             });
 
         });
@@ -99,9 +109,9 @@ var Service = {
                         layer.close(msg);
 
                         var result = JSON.parse(res);
-
+                        // var result = res;
                         // 获取日志文件zip
-                        if (result.status === '1') {
+                        if (result.status === 1) {
                             var aLink = document.createElement('a');
                             var url = 'downlog/';
                             try {

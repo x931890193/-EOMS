@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}系统安全{% endblock %}
+{#    {% block  terminal %}#}
+{#    <link href={%  static "webssh/img/favicon.png" %} rel="icon" type="image/png">#}
+{#    <link href={%  static "webssh/css/bootstrap.min.css" %} rel="stylesheet" type="text/css"/>#}
+{#    <link href={%  static "webssh/css/xterm.min.css"  %} rel="stylesheet" type="text/css"/>#}
+{#    <link href={%  static "webssh/css/fullscreen.min.css" %} rel="stylesheet" type="text/css"/>#}
+{#    <style>#}
+{#      .row {#}
+{#        margin-top: 20px;#}
+{#        margin-bottom: 10px;#}
+{#      }#}
+{##}
+{#      .container {#}
+{#        margin-top: 20px;#}
+{#      }#}
+{##}
+{#      .btn {#}
+{#        margin-top: 10px;#}
+{#      }#}
+{##}
+{#      .btn-danger {#}
+{#        margin-left: 5px;#}
+{#      }#}
+{#    </style>#}
+{#    {% endblock %}#}
+
+
+{% block nav %}
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="{% url 'index' %}" class=""><i class="lnr lnr-home"></i> <span>仪表盘</span></a></li>
+                    <li><a href="{% url 'servicelist' %}" class=""><i class="lnr lnr-code"></i> <span>服务列表</span></a>
+                    </li>
+                    <li>
+        				<a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-cog"></i> <span>功能</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+        				<div id="subPages" class="collapse in ">
+        					<ul class="nav">
+        						<li><a href="{% url 'eth' %}" class="">网卡设置</a></li>
+        						<li><a href="{% url 'sysecurity' %}" class="">安全中心</a></li>
+                                <li><a href="#" class="">服务安装</a></li>
+        					</ul>
+        				</div>
+        			</li>
+                    <li>
+                            <a href="#clientPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop-phone"></i> <span>客户端管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="clientPages" class="collapse ">
+                                    <ul class="nav">
+                                            <li><a href="{% url 'upclient' %}" class="">安装包上传</a></li>
+                                            <li><a href="{% url 'upclient' %}" class="">升级包上传</a></li>
+                                    </ul>
+                            </div>
+                    </li>
+                    <li><a href="{% url 'log' %}" class=""><i class="lnr lnr-hand"></i> <span>日志列表</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+{% endblock %}
+
+
+{% block content %}
+
+
+        <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+
+            <!-- 服务监控列表 start -->
+            <div class="log-list">
+
+
+                <!-- 基础服务 start-->
+                <div class="panel panel-headline panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Webssh</h3>
+
+                        
+                    </div>
+                    
+
+    <iframe src="http://127.0.0.1:8888" frameborder="0"   style="min-height:600px;width:100%;height:80%;"></iframe>
+                    </div>
+                </div>
+                <!-- END 基础服务 -->
+
+            </div>
+            <!-- 服务监控列表 end -->
+
+
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+        
+   
+      <!-- </div> -->
+
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block js %}
+    <script src={% static "scripts/pages/sysecurity.js" %}></script>
+{#    <script src={% static "webssh/js/jquery.min.js"%}></script>#}
+{#    <script src={% static "webssh/js/popper.min.js"%}></script>#}
+{#    <script src={% static "webssh/js/bootstrap.min.js"%}></script>#}
+{#    <script src={% static "webssh/js/xterm.min.js"%}></script>#}
+{#    <script src={% static "webssh/js/fullscreen.min.js"%}></script>#}
+{#    <script src={% static "webssh/js/main.js"%}></script>#}
+{% endblock %}

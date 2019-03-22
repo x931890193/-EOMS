@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block title %}服务列表{% endblock %}
@@ -16,8 +17,9 @@
                             <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="subPages" class="collapse ">
                             <ul class="nav">
-                                <li><a href="{% url 'eth' %}" class="">网卡配置</a></li>
-                                <li><a href="{% url 'sysecurity' %}" class="">系统安全</a></li>
+                                <li><a href="{% url 'eth' %}" class="">网卡设置</a></li>
+        						<li><a href="{% url 'sysecurity' %}" class="">安全中心</a></li>
+                                <li><a href="{% url 'terminal' %}" class="">服务安装</a></li>
                             </ul>
                         </div>
                     </li>
@@ -30,7 +32,7 @@
                                     </ul>
                             </div>
                     </li>
-
+                    <li><a href="{% url 'log' %}" class=""><i class="lnr lnr-hand"></i> <span>日志列表</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -112,25 +114,32 @@
                                         </thead>
 
                                         <tbody>
+
                                         {% for server  in vrvserver.base %}
                                                 <tr>
+
                                                     <td>{{ server.name }}</td>
                                                     <td>{{ server.comment }}</td>
+
                                                     {% if server.status == "SUCCESS" %}
                                                         <td><span class="label label-success">正常</span></td>
                                                     {% else %}
                                                         <td><span class="label label-danger">停止</span></td>
                                                     {% endif %}
+
                                                     {% if server.status == "SUCCESS" %}
                                                         <td><a data-action="stop" name="{{ server.name }}"
-                                                               class="btn btn-primary btn-xs action-btn"><i
+                                                               class="btn btn-primary btn-xs action-btn" server_port="{{ server.port }}"><i
                                                                 class="fa fa-refresh"></i>停止</a></td>
+
                                                     {% else %}
                                                         <td><a data-action="start" name="{{ server.name }}"
-                                                               class="btn btn-primary btn-xs action-btn"><i
+                                                               class="btn btn-primary btn-xs action-btn" server_port="{{ server.port }}"><i
                                                                 class="fa fa-refresh"></i>启动</a>
                                                         </td>
+
                                                     {% endif %}
+
                                                     <td>
                                                         <a type="button" class="btn btn-primary btn-xs download-btn" data-serverName="{{ server.name }}">
                                                             <i class="lnr lnr-download"></i>选择日志
@@ -179,6 +188,7 @@
                                                         </form>
                                                     </td>
                                                 </tr>
+
                                         {% endfor %}
                                         </tbody>
                                     </table>

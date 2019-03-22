@@ -1,7 +1,7 @@
 """eoms URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.0/topics/http/urls/
+    https://docs.djangoproject.com/en/2.1/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -13,14 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
-from django.urls import include
-from gorgeous import views
-
+from django.urls import path, include
+from django.views.static import serve
+from eoms import settings
 
 urlpatterns = [
-    url('', include('gorgeous.urls')),  # 匹配值跳转到gorgeous应用下面的url
-    # path('accounts/login/',views.index), # 匹配值跳转到gorgeous应用下面的url
-    # path('admin/', admin.site.urls),
+    # django 站点管理
+    path('admin/', admin.site.urls),
+    # app 入口
+    path(r"", include("app_entry.urls")),
+    # 用户相关
+    path(r"", include("app_user.urls")),
+    
 ]
+
+
+

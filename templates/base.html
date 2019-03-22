@@ -23,6 +23,11 @@
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href={% static "img/apple-icon.png" %}>
     <link rel="icon" type="image/png" sizes="96x96" href={% static "img/favicon.png" %}>
+    <!-- user_count -->
+{#    <link rel="stylesheet" type="text/css" href={% static "css/chart/reset.css" %}>#}
+	<link rel="stylesheet" type="text/css" href={% static "css/chart/main.css" %}>
+
+
 </head>
 
 <body>
@@ -42,7 +47,8 @@
             </div>
             <form class="navbar-form navbar-left" action="/" method="post">
                 <div class="input-group">
-                    <input type="text" value="" class="form-control" placeholder="搜索..." name="kw">
+                     {% csrf_token %}
+                    <input type="text" value="" class="form-control" placeholder="日志搜索..." name="kw">
                     <span class="input-group-btn"><button type="submit" class="btn btn-primary">搜一下</button></span>
                 </div>
             </form>
@@ -67,14 +73,15 @@
                             <li><a href="{% url 'logout' %}"><i class="lnr lnr-exit"></i> <span>登出</span></a></li>
                         </ul>
                     </li>
-                    <!-- <li>
-                        <a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
-                    </li> -->
+{#                     <li>#}
+{#                        <a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>#}
+{#                    </li>#}
 
 
 
 
-            <div class="time-title pull-right">
+                    <li> 
+                        <div class="time-title pull-right" >
                       <div class="year-month pull-left">
                         <p>{{ time.A }}</p>
                         <p><span style="font-size:20px">{{ time.Y }}</span>年{{ time.m }}月{{ time.d }}日</p>
@@ -83,6 +90,7 @@
                          <strong style="font-size: 35px;">{{ time.H_M }}</strong>
                       </div>
                   </div>
+              </li>
 
 
 
@@ -122,10 +130,34 @@
 <script src={% static "vendor/layer/layer.js" %}></script>
 <script src={% static "vendor/jquery-slimscroll/jquery.slimscroll.min.js" %}></script>
 {#<script src={% static "jquery-1.12.4.min.js" %}></script>#}
+<script src={% static "js/jquery.base64.js" %} ></script>
+<script src="{% static "js/main.js" %}"></script>
 
 <script src={% static "vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js" %}></script>
 <script src={% static "vendor/chartist/js/chartist.min.js" %}></script>
 <script src={% static "scripts/klorofil-common.js" %}></script>
+
+<script src={% static "css/chart/echarts.min.js" %}></script>
+
+
+<script>$(function () {
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+});
+    function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+
+    if(arr=document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}
+
+
+</script>
 
 {% block js %}
 {% endblock %}

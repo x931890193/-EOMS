@@ -12,15 +12,15 @@
                     <li><a href="{% url 'servicelist' %}" class=""><i class="lnr lnr-code"></i> <span>服务列表</span></a>
                     </li>
                     <li>
-                        <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-cog"></i>
-                            <span>功能</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                        <div id="subPages" class="ollapse in">
-                            <ul class="nav">
-                                <li><a href="{% url 'eth' %}" class="">网卡配置</a></li>
-                                <li><a href="{% url 'sysecurity' %}" class="active">系统安全</a></li>
-                            </ul>
-                        </div>
-                    </li>
+        				<a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-cog"></i> <span>功能</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+        				<div id="subPages" class="collapse in ">
+        					<ul class="nav">
+        						<li><a href="{% url 'eth' %}" class="">网卡设置</a></li>
+        						<li><a href="{% url 'sysecurity' %}" class="">安全中心</a></li>
+                                <li><a href="{% url 'terminal' %}" class="">服务安装</a></li>
+        					</ul>
+        				</div>
+        			</li>
                     <li>
                             <a href="#clientPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop-phone"></i> <span>客户端管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="clientPages" class="collapse ">
@@ -30,7 +30,7 @@
                                     </ul>
                             </div>
                     </li>
-
+                    <li><a href="{% url 'log' %}" class=""><i class="lnr lnr-hand"></i> <span>日志列表</span></a></li>
                 </ul>
             </nav>
         </div>
